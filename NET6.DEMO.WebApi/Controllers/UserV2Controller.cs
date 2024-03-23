@@ -34,7 +34,7 @@ namespace NET6.DEMO.WebApi.Controllers
             return new()
             {
                 Id = 123,
-                Name = "Richard---来自于1.0版本的数据",
+                Name = "Richard---来自于2.0版本的数据",
                 Age = 28
             };
         }
