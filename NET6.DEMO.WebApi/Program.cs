@@ -17,6 +17,10 @@ using Microsoft.AspNetCore.Mvc; //ÕâÊÇÒ»¸öÃüÃû¿Õ¼äÒıÓÃ£¬±íÊ¾´úÂëÖĞÊ¹ÓÃÁËASP.NET 
 
 using NET6.DEMO.WebApi.Utility.Version; // ÀûÓÃ°üÀ´½øĞĞÅäÖÃApiÖ§³Ö°æ±¾
 
+//¾ß±¸³éÏó¡¾½Ó¿ÚºÍ³éÏóÀà¡¿ºÍÊµÏÖ¡¾ÆÕÍ¨Àà¡¿
+using NET6.DEMO.Interfaces;// ³éÏó
+using NET6.DEMO.Services; // ¾ßÌå
+
 //´´½¨Ò»¸öÓ¦ÓÃ³ÌĞò¹¹½¨Æ÷builder£¬¸Ã¹¹½¨Æ÷ÓÃÓÚÅäÖÃºÍ¹¹½¨Ó¦ÓÃ³ÌĞò¡£
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args); // ÓÃvar×Ô¶¯ÍÆ¶ÏÀàĞÍÒ²ĞĞ
 
@@ -43,6 +47,16 @@ builder.ApiVersionExt(); // Ê¹ÓÃÕâ¸öµÄÓÅÊÆÊÇ£¬²»Í¬API°æ±¾µÄ¿ØÖÆÆ÷Ãû×Ö¿ÉÒÔÒ»Ñù£¬µ
 //¹ØÓÚSwaggerµÄÍêÕûÅäÖÃ
 builder.AddSwaggerGenExt(); // ÎªÁË½ÚÊ¡ProgramÖĞµÄ¿Õ¼ä£¬ÕâÀïµÄÂß¼­¶¼Ğ´µ½SwaggerExtensionÖĞÈ¥ÁË£¬ÃæÏò¶ÔÏóÖĞ·â×°µÄË¼Ïë
 
+#region ×¢²á³éÏóºÍ¾ßÌåÖ®¼äµÄ¹ØÏµ
+//Õâ¶Î´úÂëÊ¹ÓÃÁËÒÀÀµ×¢ÈëÈİÆ÷£¨Í¨³£ÊÇ ASP.NET Core ÖĞµÄÄÚÖÃÈİÆ÷£©µÄ Services ÊôĞÔÀ´×¢²á·şÎñµÄ³éÏóºÍ¾ßÌåÖ®¼äµÄ¹ØÏµ¡£
+    builder.Services.AddTransient<ITestServiceA, TestServiceA>();
+//AddTransient ·½·¨ÓÃÓÚ½«·şÎñ×¢²áÎªË²Ì¬£¨Transient£©ÉúÃüÖÜÆÚ¡£
+//Ë²Ì¬ÉúÃüÖÜÆÚ±íÊ¾Ã¿´ÎÇëÇó·şÎñ£¨Õâ¸öÇëÇó·şÎñÒâË¼¾ÍÊÇ£¬µ±ÎÒÃÇÊÔÍ¼ÊµÀı»¯½Ó¿ÚÊ±£©Ê±¶¼»á´´½¨Ò»¸öĞÂµÄTestServiceAÊµÀı¡£
+
+builder.Services.AddTransient<ITestServiceB, TestServiceB>();
+#endregion
+
+
 WebApplication app = builder.Build(); //Ê¹ÓÃ¹¹½¨Æ÷builderÀ´¹¹½¨Ó¦ÓÃ³ÌĞòÊµÀıapp¡£
 
 // Configure the HTTP request pipeline. // ÅäÖÃHTTPÇëÇó¹ÜµÀ¡£
@@ -52,6 +66,8 @@ if (app.Environment.IsDevelopment())
     //¶ÔÓÚSwaggerÖĞ¼ä¼şµÄÒıÈë
     app.UseSwaggerExt();  // ÎªÁË½ÚÊ¡ProgramÖĞµÄ¿Õ¼ä£¬ÕâÀïµÄÂß¼­¶¼Ğ´µ½SwaggerExtensionÖĞÈ¥ÁË
 }
+
+
 
 app.UseHttpsRedirection(); //ÓÃÓÚ½«HTTPÇëÇóÖØ¶¨Ïòµ½HTTPS£¬ÔöÇ¿°²È«ĞÔ
 

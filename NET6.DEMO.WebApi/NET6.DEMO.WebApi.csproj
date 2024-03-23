@@ -26,5 +26,9 @@
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\NET6.DEMO.Interfaces\NET6.DEMO.Interfaces.csproj" />
+	  <ProjectReference Include="..\NET6.DEMO.Services\NET6.DEMO.Services.csproj" />
+	</ItemGroup>
 
 </Project>

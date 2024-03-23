@@ -1,0 +1,15 @@
+<!--服务层-->
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NET6.DEMO.Interfaces\NET6.DEMO.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>
