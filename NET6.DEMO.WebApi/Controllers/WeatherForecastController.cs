@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc; //这是一个命名空间引用，表示代码中使用了ASP.NET Core的MVC框架。
+using NET6.DEMO.WebApi.Utility.Swagger;
 
 namespace NET6.DEMO.WebApi.Controllers
 {
@@ -9,6 +10,8 @@ namespace NET6.DEMO.WebApi.Controllers
     //这是一个特性标记，应用于控制器类。它指示控制器的路由模板，其中[controller]将被替换为控制器的名称，
     //即"WeatherForecast"。这意味着该控制器的路由将以"/WeatherForecast"开始。
     [Route("[controller]")]
+
+    [ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiVersions.V3))]
 
     //ControllerBase是ASP.NET Core中控制器的基类。
     public class WeatherForecastController : ControllerBase

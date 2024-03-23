@@ -1,13 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
-//using NET6.DEMO.WebApi.Utility.Swagger;
+using NET6.DEMO.WebApi.Utility.Swagger;
 
 namespace NET6.DEMO.WebApi.Controllers
 {
     /// <summary>
-    /// 公司资源资源---第一版本
+    /// 公司资源资源
     /// </summary>
     [ApiController]  
     [Route("[controller]")]
+    [ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiVersions.V2))]
     public class CompanyController : ControllerBase
     {
         private readonly ILogger<CompanyController> _logger;

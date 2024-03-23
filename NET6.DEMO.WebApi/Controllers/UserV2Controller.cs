@@ -7,17 +7,17 @@ namespace NET6.DEMO.WebApi.Controllers
     /// 用户资源
     /// </summary>
     [ApiController]
-    [ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiVersions.V1))]
+    [ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiVersions.V2))]
     [Route("[controller]")]
-    public class UserController : ControllerBase
+    public class UserV2Controller : ControllerBase
     {
-        private readonly ILogger<UserController> _logger;
+        private readonly ILogger<UserV2Controller> _logger;
 
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="logger"></param>
-        public UserController(ILogger<UserController> logger)
+        public UserV2Controller(ILogger<UserV2Controller> logger)
         {
             _logger = logger;
         }
