@@ -14,7 +14,7 @@ using System.Text.Encodings.Web;
 using System.Text.Unicode; // 这两个命名空间提供了与编码和 Unicode 相关的功能。// 引入目的是为了解决中文乱码问题
 
 //创建一个应用程序构建器builder，该构建器用于配置和构建应用程序。
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args); // 用var自动推断类型也行
 
 // Add services to the container.
 //将控制器服务添加到依赖注入容器中。这样可以使应用程序能够使用ASP.NET Core MVC框架来处理和响应HTTP请求。
@@ -26,52 +26,19 @@ builder.Services.AddControllers().AddJsonOptions(options => // 解决中文乱码问题
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//分别添加ApiExplorer和SwaggerGen服务到容器中。这些服务与Swagger/OpenAPI相关，
-//用于生成和提供API文档和描ApiExplorer用于生成API的元数据，而SwaggerGen用于生成Swagger规范和文档。
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(option =>
-{
-    //要启用swagger版本控制要在api控制器或者方法上添加特性[ApiExplorerSettings(GroupName = "版本号")]  我这里是枚举
-    typeof(ApiVersions).GetEnumNames().ToList().ForEach(version => // version就是枚举值
-    //获取了 ApiVersions 枚举类型的所有枚举名称，并进行迭代处理。
-    {
-        //对于每个枚举名称（即版本号），使用 option.SwaggerDoc(version, new OpenApiInfo() { ... }) 方法
-        //添加了一个 Swagger 文档。在这里，version 是枚举名称，用作文档的标识符。
-        option.SwaggerDoc(version, new OpenApiInfo()
-        {
-            //指定了文档的标题、版本号、描述等信息。
-            Title = $"{version}-版本:Api文档",
-            Version = version,
-            Description = $"通用版本的CoreApi版本{version}"
-        });
-    });
-});
+
+//关于Swagger的完整配置
+builder.AddSwaggerGenExt(); // 为了节省Program中的空间，这里的逻辑都写到SwaggerExtension中去了，面向对象中封装的思想
 
 
-var app = builder.Build(); //使用构建器builder来构建应用程序实例app。
+WebApplication app = builder.Build(); //使用构建器builder来构建应用程序实例app。
 
 // Configure the HTTP request pipeline.
 // 通过if(app.Environment.IsDevelopment())判断当前环境是否为开发环境。
 if (app.Environment.IsDevelopment())
 {
-    // 如果是开发环境，就会启用Swagger和Swagger UI。
-    // 使用app.UseSwagger()和app.UseSwaggerUI()将Swagger中间件添加到请求处理管道中，
-    // 以便在浏览器中查看和交互式测试API文档。
-    app.UseSwagger();
-    //用于配置 Swagger UI 的选项，以便在浏览器中显示 Swagger 文档。
-    app.UseSwaggerUI(option =>
-    {
-        //遍历了枚举名称集合
-        //typeof 是 C# 中的运算符，用于获取指定类型的 System.Type 对象。
-        //GetEnumNames() 是 System.Enum 类的一个方法，用于返回枚举类型的所有枚举名称的字符串数组。
-        foreach (string version in typeof(ApiVersions).GetEnumNames())
-        {
-            //对于每个枚举名称（即版本号），使用 option.SwaggerEndpoint(...) 方法
-            //添加了一个 Swagger 终结点，这个终结点的 URL 是 /swagger/{version}/swagger.json，
-            //其中 {version} 使用当前迭代的枚举名称进行替换。
-            option.SwaggerEndpoint($"/swagger/{version}/swagger.json", $"Api版本：{version}");
-        }
-    });
+    //对于Swagger中间件的引入
+    app.UseSwaggerExt();  // 为了节省Program中的空间，这里的逻辑都写到SwaggerExtension中去了
 }
 
 app.UseHttpsRedirection(); //用于将HTTP请求重定向到HTTPS，增强安全性

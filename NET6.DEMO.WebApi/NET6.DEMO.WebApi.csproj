@@ -14,6 +14,8 @@
 		<!--这个属性启用了 C# 10.0 中引入的隐式 using 声明功能。
 		它允许你在代码中隐式使用一些常用的命名空间，而无需显式添加 using 语句。-->
 		<ImplicitUsings>enable</ImplicitUsings>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<DocumentationFile></DocumentationFile>
   </PropertyGroup>
 
 	<!--这个元素用于定义项目的项（如引用的包）-->

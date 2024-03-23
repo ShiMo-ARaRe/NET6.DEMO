@@ -34,8 +34,11 @@ namespace NET6.DEMO.WebApi.Controllers
             _logger = logger;
         }
 
-        //这是一个特性标记，应用于Get()方法。它指示该方法将处理HTTP GET请求，
-        //并且路由名称为"GetWeatherForecast"。
+        //这是一个特性标记，应用于Get()方法。它指示该方法将处理HTTP GET请求，并且路由名称为"GetWeatherForecast"。
+        /// <summary>
+        /// 获取近5天的天气信息
+        /// </summary>
+        /// <returns></returns>
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
