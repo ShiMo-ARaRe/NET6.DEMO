@@ -8,7 +8,8 @@ namespace NET6.DEMO.WebApi.Controllers
     /// </summary>
     [ApiController]
     [ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiVersions.V1))]
-    [Route("[controller]")]
+    //[Route("[controller]")]
+    [Route("[controller]/[action]")] // 不推荐这样使用，因为它违反RESTful风格。[action]暴露了方法名，不安全
     public class UserController : ControllerBase
     {
         private readonly ILogger<UserController> _logger;
@@ -28,6 +29,7 @@ namespace NET6.DEMO.WebApi.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet()]
+        [Route("GetUser")] // 路由可以单独配置到方法里，并会与控制器配置的路由拼接到一起
         public User GetUser()
         {
             return new()

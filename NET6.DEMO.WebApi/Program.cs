@@ -5,35 +5,42 @@ using static System.Net.Mime.MediaTypeNames; //是 .NET Framework 提供的一个类
 //它包含了一系列常用的媒体类型名称（media type names）。这些媒体类型名称用于指定各种互联网媒体类型，
 //例如文本、图像、音频、视频等。通过使用 MediaTypeNames 类中的静态成员，你可以直接引用这些媒体类型名称，而无需手动输入字符串。
 
-//命名空间提供了一组用于处理和控制进程、事件日志和性能计数器的类。
-using System.Diagnostics;
+using System.Diagnostics; //命名空间提供了一组用于处理和控制进程、事件日志和性能计数器的类。
 using NET6.DEMO.WebApi.Utility.Swagger; // 版本控制，定义版本号
 using Microsoft.OpenApi.Models; // 它包含了用于表示和构建 OpenAPI 规范的类和接口。
 
 using System.Text.Encodings.Web;
 using System.Text.Unicode; // 这两个命名空间提供了与编码和 Unicode 相关的功能。// 引入目的是为了解决中文乱码问题
 
+using NET6.DEMO.WebApi.Utility.Route; // 全局路由扩展
+using Microsoft.AspNetCore.Mvc; //这是一个命名空间引用，表示代码中使用了ASP.NET Core的MVC框架。
+
 //创建一个应用程序构建器builder，该构建器用于配置和构建应用程序。
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args); // 用var自动推断类型也行
 
-// Add services to the container.
+// Add services to the container.// 将服务添加到容器中。
 //将控制器服务添加到依赖注入容器中。这样可以使应用程序能够使用ASP.NET Core MVC框架来处理和响应HTTP请求。
-
-builder.Services.AddControllers().AddJsonOptions(options => // 解决中文乱码问题
+builder.Services.AddControllers(option =>
+{
+    //RouteAttribute 是 ASP.NET Core 中的一个特性（Attribute），它用于指定控制器或操作的路由模板。
+    //特性可以应用于控制器类或控制器中的操作方法，用于定义它们的路由路径。
+    option.Conventions.Insert(0, new RouteConvention(new RouteAttribute("api/"))); // 给所有控制器添加路由前缀
+    // 第一个参数必须为0（不填0就会报错），表示添加到最前面。
+}
+).AddJsonOptions(options => // 解决中文乱码问题
 {
     //可以对 JSON 序列化选项进行自定义配置。这个方法接受一个 Lambda 表达式，用于指定如何配置 JSON 选项。
     options.JsonSerializerOptions.Encoder = JavaScriptEncoder.Create(UnicodeRanges.All);
 });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// 了解有关配置 Swagger/OpenAPI 的更多信息，请访问 https://aka.ms/aspnetcore/swashbuckle
 
 //关于Swagger的完整配置
 builder.AddSwaggerGenExt(); // 为了节省Program中的空间，这里的逻辑都写到SwaggerExtension中去了，面向对象中封装的思想
 
-
 WebApplication app = builder.Build(); //使用构建器builder来构建应用程序实例app。
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline. // 配置HTTP请求管道。
 // 通过if(app.Environment.IsDevelopment())判断当前环境是否为开发环境。
 if (app.Environment.IsDevelopment())
 {

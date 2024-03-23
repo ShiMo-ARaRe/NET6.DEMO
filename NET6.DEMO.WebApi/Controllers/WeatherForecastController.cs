@@ -5,11 +5,11 @@ namespace NET6.DEMO.WebApi.Controllers
 {
     //这是一个特性标记，应用于控制器类。它指示控制器是一个Web API控制器，
     //并且将自动应用一些默认的行为，如自动模型验证和HTTP响应的自动推断。
-    [ApiController]
+    [ApiController] // 如果去掉的话，Swagger就无法展示这个Api
 
     //这是一个特性标记，应用于控制器类。它指示控制器的路由模板，其中[controller]将被替换为控制器的名称，
     //即"WeatherForecast"。这意味着该控制器的路由将以"/WeatherForecast"开始。
-    [Route("[controller]")]
+    [Route("[controller]")] // 每个控制器必须都要有这个标记
 
     [ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiVersions.V3))]
 
