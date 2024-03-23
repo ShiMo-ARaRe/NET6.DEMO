@@ -15,6 +15,8 @@ using System.Text.Unicode; // 这两个命名空间提供了与编码和 Unicode 相关的功能。/
 using NET6.DEMO.WebApi.Utility.Route; // 全局路由扩展
 using Microsoft.AspNetCore.Mvc; //这是一个命名空间引用，表示代码中使用了ASP.NET Core的MVC框架。
 
+using NET6.DEMO.WebApi.Utility.Version; // 利用包来进行配置Api支持版本
+
 //创建一个应用程序构建器builder，该构建器用于配置和构建应用程序。
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args); // 用var自动推断类型也行
 
@@ -34,6 +36,9 @@ builder.Services.AddControllers(option =>
 });
 
 // 了解有关配置 Swagger/OpenAPI 的更多信息，请访问 https://aka.ms/aspnetcore/swashbuckle
+
+//利用包来进行配置API版本控制
+builder.ApiVersionExt(); // 使用这个的优势是，不同API版本的控制器名字可以一样，但是也要注意，它们必须处于不同文件夹下！
 
 //关于Swagger的完整配置
 builder.AddSwaggerGenExt(); // 为了节省Program中的空间，这里的逻辑都写到SwaggerExtension中去了，面向对象中封装的思想
@@ -56,6 +61,9 @@ app.MapControllers(); //将控制器路由到相应的动作方法。
 
 app.Run(); //运行应用程序，监听和处理传入的HTTP请求。
 
+//用Microsoft.AspNetCore.Mvc.Versioning包可以实现版本控制，但是已被弃用
+
+//控制台打印：
 //info: Microsoft.Hosting.Lifetime[14]
 //      Now listening on: https://localhost:7012
 //info: Microsoft.Hosting.Lifetime[14]

@@ -22,6 +22,8 @@
 	<ItemGroup>
 		<!--这个元素指定了要引用的包的名称和版本。在这种情况下，项目引用的是 Swashbuckle.AspNetCore 包的 6.5.0 版本。
 		Swashbuckle.AspNetCore 是一个用于生成和提供 Swagger 文档的库，在 Web API 开发中非常有用。-->
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 

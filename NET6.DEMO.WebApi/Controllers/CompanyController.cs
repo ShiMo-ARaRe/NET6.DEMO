@@ -8,7 +8,8 @@ namespace NET6.DEMO.WebApi.Controllers
     /// </summary>
     [ApiController]  
     [Route("[controller]")]
-    [ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiVersions.V2))]
+    [ApiVersion("2.0")]
+    //[ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiVersions.V2))]
     public class CompanyController : ControllerBase
     {
         private readonly ILogger<CompanyController> _logger;

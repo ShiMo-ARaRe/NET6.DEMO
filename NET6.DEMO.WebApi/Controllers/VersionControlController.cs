@@ -4,70 +4,66 @@ using NET6.DEMO.WebApi.Utility.Swagger;
 namespace NET6.DEMO.WebApi.Controllers
 {
     /// <summary>
-    /// 用户资源
+    /// 框架提供的版本控制
     /// </summary>
-    [ApiController]
-    [ApiVersion("2.0")]
-    //[ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiVersions.V2))]
-    [Route("[controller]")]
-    public class UserV2Controller : ControllerBase
+    [ApiController] 
+    [ApiVersion("1.0")] 
+    [Route("[controller]/v{version:apiVersion}")] // 添加约束，RESTful风格
+    public class VersionControlController : ControllerBase
     {
-        private readonly ILogger<UserV2Controller> _logger;
+        private readonly ILogger<VersionControlController> _logger;
 
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="logger"></param>
-        public UserV2Controller(ILogger<UserV2Controller> logger)
+        public VersionControlController(ILogger<VersionControlController> logger)
         {
             _logger = logger;
         }
-
-
+         
         /// <summary>
-        /// 获取用户信息
+        /// 获取版本信息
         /// </summary>
         /// <returns></returns>
         [HttpGet()]
-        public User GetUser()
+        public object GetVersion()
         {
-            return new()
+            return new 
             {
                 Id = 123,
-                Name = "Richard---来自于1.0版本的数据",
+                Name = "版本号1.0---来自于第一版本的响应",
                 Age = 28
             };
         }
-         
+
         /// <summary>
-        /// 新增用户信息
+        /// 新增版本信息
         /// </summary>
-        /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost()]
-        public int AddUser(User user)
+        public int AddVersion()
         {
             return 1;
         }
 
         /// <summary>
-        /// 修改用户信息
+        /// 修改版本信息
         /// </summary>
-        /// <param name="user"></param>
         /// <returns></returns>
         [HttpPut()]
-        public int UpdateUser(User user)
+        public int UpdateVersion()
         {
             return 1;
         }
 
         /// <summary>
-        /// 删除用户信息
+        /// 删除版本信息
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="VersionId"></param>
         /// <returns></returns>
         [HttpDelete()]
-        public int DeleteUser(int userId)
+        public int DeleteVersion(int VersionId)
         {
             return 1;
         }

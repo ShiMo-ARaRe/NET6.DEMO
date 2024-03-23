@@ -11,7 +11,8 @@ namespace NET6.DEMO.WebApi.Controllers
     //即"WeatherForecast"。这意味着该控制器的路由将以"/WeatherForecast"开始。
     [Route("[controller]")] // 每个控制器必须都要有这个标记
 
-    [ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiVersions.V3))]
+    [ApiVersion("3.0")]
+    //[ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiVersions.V3))]
 
     //ControllerBase是ASP.NET Core中控制器的基类。
     public class WeatherForecastController : ControllerBase

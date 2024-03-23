@@ -10,7 +10,7 @@ namespace NET6.DEMO.WebApi.Controllers
     [Route("[controller]")]
 
     //这是一个特性标记，用于指定控制器方法的 API Explorer 设置。
-    [ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiVersions.V2))] // ApiVersions是版本枚举
+    //[ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiVersions.V2))] // ApiVersions是版本枚举
     //这个属性告诉 API Explorer 不要忽略这个控制器方法。
     //这个属性用于指定控制器方法所属的 API 分组名称。在这个例子中，使用了 ApiVersions.V2，
     //它是一个命名常量，表示 API 的版本号为 V2。通过指定分组名称，
