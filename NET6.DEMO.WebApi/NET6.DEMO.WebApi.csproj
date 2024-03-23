@@ -1,0 +1,26 @@
+<!--这行指定了项目所使用的 SDK。项目使用 Microsoft.NET.Sdk.Web，它是用于构建 Web 应用程序的 .NET 项目 SDK。-->
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<!--这个元素中定义的是一组项目属性。-->
+	<PropertyGroup>
+
+		<!--这个属性指定了项目所针对的 .NET Framework 版本。在这种情况下，项目针对 .NET 6.0。-->
+		<TargetFramework>net6.0</TargetFramework>
+		
+		<!--这个属性启用了 C# 8.0 中引入的 Nullable 引用类型功能。
+		它允许你在代码中明确指定哪些引用类型可以为空。-->
+		<Nullable>enable</Nullable>
+		
+		<!--这个属性启用了 C# 10.0 中引入的隐式 using 声明功能。
+		它允许你在代码中隐式使用一些常用的命名空间，而无需显式添加 using 语句。-->
+		<ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+	<!--这个元素用于定义项目的项（如引用的包）-->
+	<ItemGroup>
+		<!--这个元素指定了要引用的包的名称和版本。在这种情况下，项目引用的是 Swashbuckle.AspNetCore 包的 6.5.0 版本。
+		Swashbuckle.AspNetCore 是一个用于生成和提供 Swagger 文档的库，在 Web API 开发中非常有用。-->
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+</Project>

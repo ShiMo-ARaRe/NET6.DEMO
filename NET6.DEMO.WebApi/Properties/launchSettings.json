@@ -1,0 +1,54 @@
+﻿{
+  //"这是一个用于指定JSON文件模式的URL。它指定了用于验证此JSON文件的模式。"
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+
+  //这是一个包含IIS（Internet Information Services）设置的对象。它定义了与IIS相关的配置。
+  "iisSettings": {
+    //"指定是否启用Windows身份验证。在此示例中，它被设置为false，表示禁用Windows身份验证。"
+    "windowsAuthentication": false,
+    //"指定是否启用匿名身份验证。在此示例中，它被设置为true，表示启用匿名身份验证。"
+    "anonymousAuthentication": true,
+    //这是一个包含IIS Express设置的对象。IIS Express是一种轻量级的Web服务器，用于开发和调试ASP.NET应用程序。
+    "iisExpress": {
+      //"指定应用程序的URL。在此示例中，应用程序的URL是http://localhost:38551。
+      "applicationUrl": "http://localhost:38551",
+      //"指定SSL端口。"
+      "sslPort": 44382
+    }
+  },
+
+  //这是一个包含不同配置文件的对象。每个配置文件定义了一个应用程序的不同配置。
+  "profiles": {
+
+    //这是一个配置文件，用于名为"NET6.DEMO.WebApi"的.NET Core Web API应用程序。
+    "NET6.DEMO.WebApi": {
+      //"指定执行应用程序的命令。"commandName" 设置为"Project"，表示使用项目文件启动应用程序。
+      "commandName": "Project",
+      "dotnetRunMessages": true, //指定是否显示dotnet run命令的消息。
+      "launchBrowser": true, //指定是否在应用程序启动时自动打开浏览器。
+      "launchUrl": "swagger", //指定在浏览器中打开的URL。
+      //指定应用程序的URL。
+      "applicationUrl": "https://localhost:7012;http://localhost:5199", //应用程序将同时监听这两个URL。
+      //指定应用程序的环境变量。
+      "environmentVariables": {
+        //设置了一个名为"ASPNETCORE_ENVIRONMENT"的环境变量，其值为"Development"，表示应用程序正在开发环境中运行。
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+
+    //这是一个配置文件，用于IIS Express。
+    "IIS Express": {
+      //指定执行应用程序的命令。在此示例中，它被设置为"IISExpress"，表示使用IIS Express运行应用程序。
+      "commandName": "IISExpress",
+      //指定是否在应用程序启动时自动打开浏览器。在此示例中，它被设置为true，表示自动打开浏览器。
+      "launchBrowser": true,
+      //指定在浏览器中打开的URL。在此示例中，它被设置为"swagger"，表示打开Swagger文档页面。
+      "launchUrl": "swagger",
+      //指定应用程序的环境变量。
+      "environmentVariables": {
+        //设置了一个名为"ASPNETCORE_ENVIRONMENT"的环境变量，其值为"Development"，表示应用程序正在开发环境中运行。
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
