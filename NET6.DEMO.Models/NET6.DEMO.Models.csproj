@@ -1,5 +1,3 @@
-<!--提供接口-->
-
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
@@ -7,9 +5,5 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\NET6.DEMO.Models\NET6.DEMO.Models.csproj" />
-  </ItemGroup>
 
 </Project>

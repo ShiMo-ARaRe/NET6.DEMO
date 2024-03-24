@@ -26,7 +26,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args); // 用var自动
 
 // Add services to the container.// 将服务添加到容器中。
 //将控制器服务添加到依赖注入容器中。这样可以使应用程序能够使用ASP.NET Core MVC框架来处理和响应HTTP请求。
-builder.Services.AddControllers(option =>
+builder.Services.AddControllers(option => //添加全局路由前缀
 {
     //RouteAttribute 是 ASP.NET Core 中的一个特性（Attribute），它用于指定控制器或操作的路由模板。
     //特性可以应用于控制器类或控制器中的操作方法，用于定义它们的路由路径。
@@ -54,8 +54,8 @@ builder.AddSwaggerGenExt(); // 为了节省Program中的空间，这里的逻辑都写到SwaggerE
 //瞬态生命周期表示每次请求服务（这个请求服务意思就是，当我们试图实例化接口时）时都会创建一个新的TestServiceA实例。
 
 builder.Services.AddTransient<ITestServiceB, TestServiceB>();
+builder.Services.AddTransient<IStudentService, StudentService>();
 #endregion
-
 
 WebApplication app = builder.Build(); //使用构建器builder来构建应用程序实例app。
 
