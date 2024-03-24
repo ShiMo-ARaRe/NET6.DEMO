@@ -7,7 +7,7 @@ namespace NET6.DEMO.WebApi.Controllers
     /// 路由约束案例
     /// </summary>
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/v{version:apiVersion}")]
     public class RouteConstraintController : ControllerBase
     {
         private readonly ILogger<RouteConstraintController> _logger;

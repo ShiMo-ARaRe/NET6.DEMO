@@ -9,7 +9,7 @@ namespace NET6.DEMO.WebApi.Controllers
     [ApiController]
     [ApiVersion("2.0")]
     //[ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiVersions.V2))]
-    [Route("[controller]")]
+    [Route("[controller]/v{version:apiVersion}")]
     public class UserV2Controller : ControllerBase
     {
         private readonly ILogger<UserV2Controller> _logger;

@@ -9,7 +9,7 @@ namespace NET6.DEMO.WebApi.Controllers
 
     //这是一个特性标记，应用于控制器类。它指示控制器的路由模板，其中[controller]将被替换为控制器的名称，
     //即"WeatherForecast"。这意味着该控制器的路由将以"/WeatherForecast"开始。
-    [Route("[controller]")] // 每个控制器必须都要有这个标记
+    [Route("[controller]/v{version:apiVersion}")] // 每个控制器必须都要有这个标记
 
     [ApiVersion("3.0")]
     //[ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiVersions.V3))]

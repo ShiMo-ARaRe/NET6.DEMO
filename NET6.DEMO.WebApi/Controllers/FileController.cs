@@ -7,7 +7,7 @@ namespace NET6.DEMO.WebApi.Controllers
     /// 文件资源
     /// </summary>
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/v{version:apiVersion}")]
 
     //这是一个特性标记，用于指定控制器方法的 API Explorer 设置。
     //[ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiVersions.V2))] // ApiVersions是版本枚举

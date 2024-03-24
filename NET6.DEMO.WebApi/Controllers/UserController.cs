@@ -9,7 +9,7 @@ namespace NET6.DEMO.WebApi.Controllers
     [ApiController]
     [ApiVersion("1.0")]
     //[ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiVersions.V1))]
-    [Route("[controller]")]
+    [Route("[controller]/v{version:apiVersion}")]
     //[Route("[controller]/[action]")] // 不推荐这样使用，因为它违反RESTful风格。[action]暴露了方法名，不安全
     public class UserController : ControllerBase
     {

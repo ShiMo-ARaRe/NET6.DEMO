@@ -19,10 +19,27 @@ using NET6.DEMO.WebApi.Utility.Version; // 利用包来进行配置Api支持版本
 
 //具备抽象【接口和抽象类】和实现【普通类】
 using NET6.DEMO.Interfaces;// 抽象
-using NET6.DEMO.Services; // 具体
+using NET6.DEMO.Services;// 具体
+
+using NLog.Web;
+using NLog; // 利用NLog包来管理日志
+
+// 读取NLog配置文件
+var logger = NLog.LogManager.Setup().LoadConfigurationFromFile("CfgFile/NLog.config").GetCurrentClassLogger();
 
 //创建一个应用程序构建器builder，该构建器用于配置和构建应用程序。
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args); // 用var自动推断类型也行
+
+//配置log4net (需要引入 log4net + Microsoft.Extensions.Logging.Log4Net.AspNetCore包
+//builder.Logging.AddLog4Net("CfgFile/log4net.Config"); // 使用后会替换掉内置的日志
+
+#region NLog配置  (需要引入NLog.Web.AspNetCore包
+
+//builder.Logging.ClearProviders();
+builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
+builder.Host.UseNLog();
+
+#endregion
 
 // Add services to the container.// 将服务添加到容器中。
 //将控制器服务添加到依赖注入容器中。这样可以使应用程序能够使用ASP.NET Core MVC框架来处理和响应HTTP请求。

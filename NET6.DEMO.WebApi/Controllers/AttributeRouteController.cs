@@ -7,7 +7,7 @@ namespace NET6.DEMO.WebApi.Controllers
     /// 特性路由解读
     /// </summary>
     [ApiController] // 如果去掉的话，Swagger就无法展示这个Api
-    [Route("[controller]")] // 每个控制器必须都要有这个标记
+    [Route("[controller]/v{version:apiVersion}")] // 每个控制器必须都要有这个标记
     public class AttributeRouteController : ControllerBase
     {
         private readonly ILogger<AttributeRouteController> _logger;

@@ -7,7 +7,7 @@ namespace NET6.DEMO.WebApi.Controllers
     /// 公司资源资源
     /// </summary>
     [ApiController]  
-    [Route("[controller]")]
+    [Route("[controller]/v{version:apiVersion}")]
     [ApiVersion("2.0")]
     //[ApiExplorerSettings(IgnoreApi = false, GroupName = nameof(ApiVersions.V2))]
     public class CompanyController : ControllerBase
