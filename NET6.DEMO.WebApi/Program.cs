@@ -18,11 +18,14 @@ using Microsoft.AspNetCore.Mvc; //这是一个命名空间引用，表示代码中使用了ASP.NET 
 using NET6.DEMO.WebApi.Utility.Version; // 利用包来进行配置Api支持版本
 
 //具备抽象【接口和抽象类】和实现【普通类】
-using NET6.DEMO.Interfaces;// 抽象
-using NET6.DEMO.Services;// 具体
+using NET6.DEMO.Interfaces; // 抽象
+using NET6.DEMO.Services; // 具体
 
 using NLog.Web;
 using NLog; // 利用NLog包来管理日志
+
+using NET6.DEMO.WebApi.Utility.Filters; // 引入过滤器
+using Microsoft.AspNetCore.Authorization; 
 
 // 读取NLog配置文件
 var logger = NLog.LogManager.Setup().LoadConfigurationFromFile("CfgFile/NLog.config").GetCurrentClassLogger();
@@ -43,8 +46,10 @@ builder.Host.UseNLog();
 
 // Add services to the container.// 将服务添加到容器中。
 //将控制器服务添加到依赖注入容器中。这样可以使应用程序能够使用ASP.NET Core MVC框架来处理和响应HTTP请求。
-builder.Services.AddControllers(option => //添加全局路由前缀
+builder.Services.AddControllers(option => // 全局配置
 {
+    //option.Filters.Add<CustomExceptionFilterAttribute>(); //全局注册 --对于整个项目中所有的方法都生效的(控制异常的扩展
+
     //RouteAttribute 是 ASP.NET Core 中的一个特性（Attribute），它用于指定控制器或操作的路由模板。
     //特性可以应用于控制器类或控制器中的操作方法，用于定义它们的路由路径。
     option.Conventions.Insert(0, new RouteConvention(new RouteAttribute("api/"))); // 给所有控制器添加路由前缀
@@ -72,6 +77,17 @@ builder.AddSwaggerGenExt(); // 为了节省Program中的空间，这里的逻辑都写到SwaggerE
 
 builder.Services.AddTransient<ITestServiceB, TestServiceB>();
 builder.Services.AddTransient<IStudentService, StudentService>();
+
+/* 为了支持ServcieFilter
+ 如果不注册这两个服务，那么就无法通过[ServiceFilter(typeof(CustomLogActionFilterAttribute))]或
+ [ServiceFilter(typeof(CustomLogActionFilterAttribute))]将过滤器应用于控制器或API方法。
+ */
+builder.Services.AddTransient<CustomAsyncExceptionFilterAttribute>();
+builder.Services.AddTransient<CustomLogActionFilterAttribute>();
+
+
+
+//builder.Services.AddTransient<IAuthorizationHandler, NikeNameAuthorizationHandler>();
 #endregion
 
 WebApplication app = builder.Build(); //使用构建器builder来构建应用程序实例app。

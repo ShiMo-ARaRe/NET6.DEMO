@@ -31,7 +31,7 @@ IoC 容器是一种实现依赖注入的机制，它负责创建和管理对象的生命周期，
  */
 
 
-namespace Zhaoxi.NET6Demo.WebApi.Controllers // 定义命名空间
+namespace NET6.DEMO.WebApi.Controllers // 定义命名空间
 {
     [ApiController] // 标记这是一个API控制器
     [ApiVersion("1.0")] // 指定API版本为1.0
