@@ -37,11 +37,18 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args); // 用var自动
 //builder.Logging.AddLog4Net("CfgFile/log4net.Config"); // 使用后会替换掉内置的日志
 
 #region NLog配置  (需要引入NLog.Web.AspNetCore包
-
+/*  ClearProviders() 方法用于清除应用程序的日志提供程序，以确保在配置新的日志
+    提供程序之前不会有其他日志记录器被添加。这样可以避免与默认的日志提供程序冲突或重复日志记录的问题。*/
 //builder.Logging.ClearProviders();
-builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
-builder.Host.UseNLog();
 
+/*  SetMinimumLevel() 方法用于设置日志记录的最小级别。在这里，将日志记录级别设置为 Information，
+    表示只记录信息级别及更高级别的日志消息。更低级别的日志消息（例如 Debug）将被忽略。
+    这有助于控制日志的详细程度，以避免记录过多的冗余信息。*/
+builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
+
+/*  UseNLog() 方法是使用 NLog 日志库来配置应用程序的日志记录。
+    它将 NLog 日志提供程序添加到应用程序的日志记录器中，以便使用 NLog 进行日志记录。*/
+builder.Host.UseNLog();
 #endregion
 
 // Add services to the container.// 将服务添加到容器中。
@@ -84,8 +91,6 @@ builder.Services.AddTransient<IStudentService, StudentService>();
  */
 builder.Services.AddTransient<CustomAsyncExceptionFilterAttribute>();
 builder.Services.AddTransient<CustomLogActionFilterAttribute>();
-
-
 
 //builder.Services.AddTransient<IAuthorizationHandler, NikeNameAuthorizationHandler>();
 #endregion
