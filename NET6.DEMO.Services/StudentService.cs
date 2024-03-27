@@ -40,8 +40,8 @@ namespace NET6.DEMO.Services
 
         public bool Validata(string nickname)
         {
-            //使用 Equals 方法比较传入的 nickname 字符串是否等于 "金牌讲师Richard老师"。
-            return  nickname.Equals("金牌讲师Richard老师");
+            //使用 Equals 方法比较传入的 nickname 字符串是否等于 "Richard老师"。
+            return  nickname.Equals("Richard老师");
         }
     }
 }

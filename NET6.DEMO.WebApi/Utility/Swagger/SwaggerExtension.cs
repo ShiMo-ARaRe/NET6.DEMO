@@ -95,27 +95,42 @@ namespace NET6.DEMO.WebApi.Utility.Swagger
                 #region 扩展传入Token
                 {
                     //添加安全定义
+                    //通过 option.AddSecurityDefinition 方法添加了一个安全定义，用于描述如何传递 JWT Token。
                     option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                     {
                         Description = "请输入token,格式为 Bearer xxxxxxxx（注意中间必须有空格）",
-                        Name = "Authorization",
-                        In = ParameterLocation.Header,
-                        Type = SecuritySchemeType.ApiKey,
-                        BearerFormat = "JWT",
-                        Scheme = "Bearer"
+                        Name = "Authorization", //指定了 Token 的名称为 "Authorization"。
+                        In = ParameterLocation.Header, //指定了 Token 的位置为请求头部（Header）。
+                        Type = SecuritySchemeType.ApiKey, //指定了安全方案的类型为 API 密钥（ApiKey）。
+                        BearerFormat = "JWT", //定了 JWT Token 的格式为 "JWT"。
+                        Scheme = "Bearer" //指定了使用 "Bearer" 方案传递 Token。
                     });
+
+
                     //添加安全要求
+                    //AddSecurityRequirement 方法用于添加一个安全要求，它接受一个 OpenApiSecurityRequirement 对象作为参数。
+                    //在这个对象中，我们定义了一个安全方案（security scheme）和相应的权限范围（scopes）。
                     option.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                            //OpenApiSecurityRequirement：表示一个安全要求，它可以包含一个或多个安全方案和相应的权限范围。
                         {
+                            //OpenApiSecurityScheme：定义了一个安全方案，用于描述如何进行身份验证和授权。
                             new OpenApiSecurityScheme
                             {
-                                Reference =new OpenApiReference()
+                                //Reference：指定了安全方案的引用，这使得我们可以引用先前定义的安全方案。
+                                Reference =new OpenApiReference() 
+                                //OpenApiReference：指定了安全方案的引用类型和标识符。
                                 {
+                                    //表示引用的类型是安全方案。
                                     Type = ReferenceType.SecurityScheme,
+                                    //指定了被引用安全方案的标识符为 "Bearer"。这个标识符通常是在之前的安全定义中定义的。
                                     Id ="Bearer"
                                 }
                             },
+                            //new string[]{ } 表示在这个安全要求中没有特定的权限范围要求。
+                            //这意味着只要满足安全方案的要求进行身份验证，不需要特定的权限范围。
                             new string[]{ }
+                            /*我们引用了一个先前定义的安全方案 "Bearer"。这可能是在 option.AddSecurityDefinition 方法中定义的安全方案。
+                            通过引用安全方案，我们表明 API 的访问要求满足该安全方案的要求，即需要进行身份验证和授权。*/
                         }
                      });
                  }
@@ -146,6 +161,7 @@ namespace NET6.DEMO.WebApi.Utility.Swagger
                 //用于配置 Swagger UI 的选项，以便在浏览器中显示 Swagger 文档。
                 app.UseSwaggerUI(option =>
                 {
+                    #region 分版本的Swagger配置
                     ////遍历了枚举名称集合
                     ////typeof 是 C# 中的运算符，用于获取指定类型的 System.Type 对象。
                     ////GetEnumNames() 是 System.Enum 类的一个方法，用于返回枚举类型的所有枚举名称的字符串数组。
@@ -156,6 +172,7 @@ namespace NET6.DEMO.WebApi.Utility.Swagger
                     //    //其中 {version} 使用当前迭代的枚举名称进行替换。
                     //    option.SwaggerEndpoint($"/swagger/{version}/swagger.json", $"Api版本：{version}");
                     //}
+                    #endregion
 
                     #region 调用第三方程序包支持版本控制
                     {

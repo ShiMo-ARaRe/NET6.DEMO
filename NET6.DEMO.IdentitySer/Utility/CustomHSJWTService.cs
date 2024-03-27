@@ -4,9 +4,13 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 //引用了System.IdentityModel.Tokens.Jwt命名空间，用于使用JWT（JSON Web Token）相关的类和方法。
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection.PortableExecutable;
+
 //引用了System.Security.Claims命名空间，用于处理声明（Claims）相关的类和方法。
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Security.Cryptography.Xml;
+
 
 //引用了System.Text命名空间，用于处理字符串编码相关的类和方法。
 using System.Text;
@@ -42,6 +46,8 @@ namespace NET6.Demo.IdentitySer.Utility
             //在方法中，根据CurrentUser对象的属性构建了一组声明（Claims）。
             List<Claim> claims = new List<Claim>()
             {
+                /*  使用预定义的常量（如 ClaimTypes.Name）来表示声明的类型，
+                    有助于确保在不同的身份验证和授权系统之间的一致性，以及简化代码的编写和维护。*/
                  new Claim(ClaimTypes.Name, user.Name),
                  new Claim("NickName",user.NikeName), 
                  new Claim("Description",user.Description),
@@ -71,17 +77,25 @@ namespace NET6.Demo.IdentitySer.Utility
             传递给它用于对JWT令牌进行签名。*/
             SigningCredentials creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+            /*  JWT 是一种特定类型的令牌，它采用 JSON 格式，包含了一组声明（claims）作为令牌的内容。
+                这些声明可以包括用户的身份信息、权限、过期时间等。
+                JWT 通常由三部分组成：头部（Header）、载荷（Payload）和签名（Signature）。
+                头部（Header）包含了关于令牌的元数据和加密算法的信息。
+                载荷（Payload）包含了实际的声明信息，例如用户的身份、角色、权限等。
+                签名（Signature）用于验证令牌的完整性和真实性，确保令牌在传输过程中没有被篡改。*/
+
 
             //创建了一个JwtSecurityToken对象,用于表示JWT令牌。
             JwtSecurityToken token = new JwtSecurityToken(
                   issuer: _JWTTokenOptions.Issuer, // 发行者
                   audience: _JWTTokenOptions.Audience,// 受众
                   claims: claims, // 声明（Claims）
-                  expires: DateTime.Now.AddMinutes(5),//过期时间 //5分钟有效期,
+                  expires: DateTime.Now.AddDays(7),//过期时间 //7天有效期,
                   signingCredentials: creds); // 签名凭据等参数
 
             //最后使用JwtSecurityTokenHandler类的WriteToken方法将JWT令牌序列化为字符串，并将其作为方法的返回值。
             return new JwtSecurityTokenHandler().WriteToken(token);
+
         }
     }
 }
