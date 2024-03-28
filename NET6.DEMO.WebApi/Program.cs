@@ -38,7 +38,6 @@ using System.Security.Claims; // 用于处理身份验证和授权领域的声明（Claims）。
 using NET6.Demo.WebApi.Utility;  //放置实用工具类，获得一些常用的功能和功能扩展，以提高开发效率和代码的可维护性。
 
 
-
 // 读取NLog配置文件
 var logger = NLog.LogManager.Setup().LoadConfigurationFromFile("CfgFile/NLog.config").GetCurrentClassLogger();
 
@@ -104,7 +103,9 @@ builder.Services.AddTransient<IStudentService, StudentService>();
 builder.Services.AddTransient<CustomAsyncExceptionFilterAttribute>();
 builder.Services.AddTransient<CustomLogActionFilterAttribute>();
 
-
+/* 在ASP.NET Core的依赖注入容器中注册一个服务。
+ * 它告诉容器，当需要IAuthorizationHandler接口的实例时，使用NikeNameAuthorizationHandler类进行创建。
+ * 这意味着NikeNameAuthorizationHandler将用于处理授权逻辑。*/
 builder.Services.AddTransient<IAuthorizationHandler, NikeNameAuthorizationHandler>();
 #endregion
 
@@ -184,43 +185,43 @@ builder.Services
 
       });
 
-      //option.AddPolicy("Policy002", policyBuilder =>
-      //{
-      //    policyBuilder.AddRequirements(new CustomNickNameRequirement()); //策略授权扩展，把代码逻辑放到其他文件中
-      //});
-
-
       option.AddPolicy("Policy002", policyBuilder =>
       {
-          //必须包含什么
-          policyBuilder.RequireRole("admin");
-          policyBuilder.RequireUserName("FFFF");
-          policyBuilder.RequireClaim("NickName");
-
-          policyBuilder.RequireAssertion(context =>
-          /*    context 是一个 AuthorizationHandlerContext 对象，它封装了授权过程中所需的上下文信息。
-                AuthorizationHandlerContext 提供了访问用户信息、资源信息以及其他授权相关的数据的能力。
-                context.User 是 AuthorizationHandlerContext 对象的一个属性，它表示当前请求的用户身份信息。
-                context.User 是 ClaimsPrincipal 类型的实例，它代表了当前经过身份验证的用户。
-                context.User.Claims 表示当前经过身份验证的用户所具有的声明集合。
-                你可以使用 Claims 属性来访问和操作这些声明，例如检查特定类型的声明是否存在、获取声明的值等。
-           */
-          {
-              /* HasClaim 方法接受一个谓词（Predicate）作为参数，用于指定需要满足的声明条件。
-               * 在这里，谓词 c => c.Type == ClaimTypes.Role 表示要求声明的类型（Type）为 "Role"。
-               * 如果用户具有 至少一个类型 为 "Role" 的声明，则该条件返回 true。
-               */
-              bool bResult = context.User.HasClaim(c => c.Type == ClaimTypes.Role)
-              /* First 方法用于获取第一个声明。然后，通过 Value 属性获取该声明的值进行比较。
-                 如果第一个角色声明的值等于 "admin"，则该条件返回 true。*/
-                 && context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Role)).Value == "admin"
-                 && context.User.Claims.Any(c => c.Type == ClaimTypes.Name);
-              return bResult;
-              /*  变量 c 在三个不同的位置使用，但其含义是相同的。
-                  用户声明（Claim）的临时变量，用于在 LINQ 查询中进行条件匹配和值获取。*/
-          });
-
+          policyBuilder.AddRequirements(new CustomNickNameRequirement()); //策略授权扩展，把代码逻辑放到其他文件中
       });
+
+
+      //option.AddPolicy("Policy002", policyBuilder =>
+      //{
+      //    //必须包含什么
+      //    policyBuilder.RequireRole("admin");
+      //    policyBuilder.RequireUserName("FFFF");
+      //    policyBuilder.RequireClaim("NickName");
+
+      //    policyBuilder.RequireAssertion(context =>
+      //    /*    context 是一个 AuthorizationHandlerContext 对象，它封装了授权过程中所需的上下文信息。
+      //          AuthorizationHandlerContext 提供了访问用户信息、资源信息以及其他授权相关的数据的能力。
+      //          context.User 是 AuthorizationHandlerContext 对象的一个属性，它表示当前请求的用户身份信息。
+      //          context.User 是 ClaimsPrincipal 类型的实例，它代表了当前经过身份验证的用户。
+      //          context.User.Claims 表示当前经过身份验证的用户所具有的声明集合。
+      //          你可以使用 Claims 属性来访问和操作这些声明，例如检查特定类型的声明是否存在、获取声明的值等。
+      //     */
+      //    {
+      //        /* HasClaim 方法接受一个谓词（Predicate）作为参数，用于指定需要满足的声明条件。
+      //         * 在这里，谓词 c => c.Type == ClaimTypes.Role 表示要求声明的类型（Type）为 "Role"。
+      //         * 如果用户具有 至少一个类型 为 "Role" 的声明，则该条件返回 true。
+      //         */
+      //        bool bResult = context.User.HasClaim(c => c.Type == ClaimTypes.Role)
+      //        /* First 方法用于获取第一个声明。然后，通过 Value 属性获取该声明的值进行比较。
+      //           如果第一个角色声明的值等于 "admin"，则该条件返回 true。*/
+      //           && context.User.Claims.First(c => c.Type.Equals(ClaimTypes.Role)).Value == "admin"
+      //           && context.User.Claims.Any(c => c.Type == ClaimTypes.Name);
+      //        return bResult;
+      //        /*  变量 c 在三个不同的位置使用，但其含义是相同的。
+      //            用户声明（Claim）的临时变量，用于在 LINQ 查询中进行条件匹配和值获取。*/
+      //    });
+
+      //});
   }) //启用授权
   .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
   /* 并将其配置为使用 JWT Bearer 身份验证方案（JwtBearerDefaults.AuthenticationScheme）。
@@ -293,8 +294,10 @@ WebApplication app = builder.Build(); //使用构建器builder来构建应用程序实例app。
 if (app.Environment.IsDevelopment())
 {
     //对于Swagger中间件的引入
-    app.UseSwaggerExt();  // 为了节省Program中的空间，这里的逻辑都写到SwaggerExtension中去了
+    //app.UseSwaggerExt();  // 为了节省Program中的空间，这里的逻辑都写到SwaggerExtension中去了
 }
+
+app.UseSwaggerExt();//让IIS部署CoreWebApi时也启用Swagger
 
 app.UseHttpsRedirection(); //用于将HTTP请求重定向到HTTPS，增强安全性
 

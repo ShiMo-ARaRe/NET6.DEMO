@@ -32,7 +32,7 @@ namespace NET6.DEMO.IdentitySer.Controllers
                     Id = 123,
                     Name = "FFFF",
                     Age = 36,
-                    NikeName = "老王",
+                    NikeName = "Richard老师",
                     Description = ".NETWebApi开发人员",
                     RoleList = new List<string>() {
                         "admin",
